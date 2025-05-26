@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Blog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="/posts/new">New Post</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-link nav-link">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div th:if="${posts.empty}" class="alert alert-info">
+                    No posts available yet.
+                </div>
+                <div th:each="post : ${posts}" class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${post.title}">Post Title</h2>
+                        <p class="card-text" th:text="${#strings.abbreviate(post.content, 300)}">Post content...</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Posted by <span th:text="${post.author.username}">author</span>
+                                on <span th:text="${#temporals.format(post.createdAt, 'dd MMM yyyy')}">date</span>
+                            </small>
+                            <div>
+                                <a th:href="@{/posts/{id}(id=${post.id})}" class="btn btn-primary btn-sm">Read More</a>
+                                <div th:if="${#authentication.name == post.author.username}" class="btn-group ms-2">
+                                    <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-secondary btn-sm">Edit</a>
+                                    <form th:action="@{/posts/{id}(id=${post.id})}" method="post" class="d-inline" 
+                                          onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav th:if="${posts.totalPages > 1}" aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${posts.first ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/(page=${posts.number - 1})}" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, posts.totalPages - 1)}"
+                            th:classappend="${pageNumber == posts.number ? 'active' : ''}">
+                            <a class="page-link" th:href="@{/(page=${pageNumber})}" th:text="${pageNumber + 1}">1</a>
+                        </li>
+                        <li class="page-item" th:classappend="${posts.last ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/(page=${posts.number + 1})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to the Blog</h5>
+                        <p class="card-text">Share your thoughts and ideas with the world.</p>
+                        <div sec:authorize="!isAuthenticated()">
+                            <hr>
+                            <p>Please <a href="/login">login</a> or <a href="/register">register</a> to create posts.</p>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <hr>
+                            <a href="/posts/new" class="btn btn-primary">Create New Post</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

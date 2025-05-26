@@ -1,0 +1,105 @@
+:root {
+    --bg-dark: #121212;
+    --bg-dark-lighter: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --primary: #bb86fc;
+    --primary-variant: #3700b3;
+    --secondary: #03dac6;
+    --error: #cf6679;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+.navbar {
+    background-color: var(--bg-dark-lighter) !important;
+}
+
+.card {
+    background-color: var(--bg-dark-lighter);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-text {
+    color: var(--text-secondary);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-variant);
+    border-color: var(--primary-variant);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: var(--bg-dark);
+}
+
+.form-control {
+    background-color: var(--bg-dark);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.form-control:focus {
+    background-color: var(--bg-dark);
+    border-color: var(--primary);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.25rem rgba(187, 134, 252, 0.25);
+}
+
+.alert {
+    background-color: var(--bg-dark-lighter);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.alert-info {
+    color: var(--secondary);
+}
+
+.alert-danger {
+    color: var(--error);
+}
+
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.pagination .page-link {
+    background-color: var(--bg-dark-lighter);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--primary-variant);
+    border-color: var(--primary-variant);
+    color: var(--text-primary);
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    margin-top: 1rem;
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+} 

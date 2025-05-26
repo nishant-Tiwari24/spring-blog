@@ -1,4 +1,4 @@
-# Spring Boot Blog Application
+# Spring Boot Blog Application using Vibe Coding
 
 A full-featured blog application built with Spring Boot 3.2.3, featuring user authentication, post management, and image uploads.
 

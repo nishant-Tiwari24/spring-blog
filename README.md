@@ -33,8 +33,8 @@ A full-featured blog application built with Spring Boot 3.2.3, featuring user au
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/java-fullstack.git
-   cd java-fullstack
+   git clone https://github.com/nishant-Tiwari24/spring-blog.git
+   cd spring-blog
    ```
 
 2. Build the project:
